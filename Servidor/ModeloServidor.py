@@ -22,12 +22,12 @@ class Usuarios(BaseServidor):
     Edad = Column(Integer, nullable=False)
 
     Sala_Relacion = relationship("Salas", backref=backref("Sala"), foreign_keys=[Sala_Actual])
-	
+
     def set_edad(self, born):
         today = date.today()
         born = born.split('/')
         self.Edad= today.year - int(born[2]) - ((today.month, today.day) < (int(born[1]), int(born[0])))
-	
+
     def set_password(self, password):
         self.Clave = generate_password_hash(password)
 
@@ -48,18 +48,19 @@ class Mensajes_Privados(BaseServidor):
     id = Column(Integer, primary_key=True)
     Hora = Column(DateTime, default=datetime.now, nullable=False)
     Cuerpo = Column(Text, nullable=False)
-    Estado_id = Column(Integer, ForeignKey('estados.id'), nullable=False)
+    #Estado_id = Column(Integer, ForeignKey('estados.id'), nullable=False)
     Emisor_FK = Column(Text, ForeignKey('usuarios.Nickname'), nullable=False)
     Receptor_FK = Column(Text, ForeignKey('usuarios.Nickname'), nullable=False)
+    #HELOW dsdsd
 
     #Relaciones-----------
-    Estados_Relacion = relationship("Estados", backref=backref("Estado"), foreign_keys=[Estado_id])
+    #Estados_Relacion = relationship("Estados", backref=backref("Estado"), foreign_keys=[Estado_id])
     Emisor_Relacion = relationship("Usuarios", backref=backref("Emisor"), foreign_keys=[Emisor_FK])
     Receptor_Relacion = relationship("Usuarios", backref=backref("Receptor"), foreign_keys=[Receptor_FK])
     #---------------------
     def __repr__(self):
         return '<Mensaje Privado {}>'.format(self.Cuerpo)
-
+"""
 class Estados(BaseServidor):
     __tablename__ = 'estados'
     id = Column(Integer, primary_key=True)
@@ -67,7 +68,7 @@ class Estados(BaseServidor):
 
     def __repr__(self):
         return '<Estado {}>'.format(self.Descripcion)
-
+"""
 class Salas(BaseServidor):
     __tablename__ = 'salas'
     Nombre = Column(Text, primary_key=True)
@@ -75,6 +76,13 @@ class Salas(BaseServidor):
     Owner_FK = Column(Text, ForeignKey('usuarios.Nickname'), nullable=True)
 
     Owner_Relacion = relationship("Usuarios", backref=backref("Creador"), foreign_keys=[Owner_FK])
+
+    def toDict(self):
+        info = {}
+        info['nombre'] = self.Nombre
+        info['descripcion'] = self.Descripcion
+        info['owner'] = self.Owner_FK
+        return info
 
     def __repr__(self):
         return '<Sala {}>'.format(self.Nombre)

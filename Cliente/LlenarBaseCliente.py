@@ -3,6 +3,7 @@
 from ModeloCliente import *
 from ConfigBaseCliente import sessioncliente
 
+
 estado1 = Estados(Descripcion='Mensaje no llegó al servidor.')
 sessioncliente.add(estado1)
 

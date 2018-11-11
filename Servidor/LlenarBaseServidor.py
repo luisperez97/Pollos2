@@ -1,6 +1,6 @@
-from ModeloServidor import Estados, Salas
+from ModeloServidor import Salas
 from ConfigBaseServidor import sessionservidor
-
+"""
 estado1 = Estados(Descripcion='Mensaje no llegó al servidor.')
 sessionservidor.add(estado1)
 
@@ -11,7 +11,7 @@ estado3 = Estados(Descripcion='Mensaje no llegó al cliente.')
 sessionservidor.add(estado3)
 
 estado4 = Estados(Descripcion='Mensaje llegó al cliente.')
-sessionservidor.add(estado4)
+sessionservidor.add(estado4)"""
 
 sala_default = Salas(Nombre='Default', Descripcion='Sala por defecto.',)
 sessionservidor.add(sala_default)
