@@ -1,0 +1,32 @@
+
+def cerrarSesionChat(ventana, usuario):
+	global ventanaLogin
+
+	if os.path.exists("../cliente.db"):
+		os.remove("../cliente.db")
+	else:
+		print("No existe la base de datos")
+	ventana.hide()
+	ventana.deleteLater()
+	ventanaLogin = Interfaz.Login.VentanaLogin()
+	ventanaLogin.show()
+	
+
+def salirChat(ventana, usuario):
+	cerrarSesionChat(ventana, usuario)
+	salir(ventana)
+
+def salir(ventana): 
+	#matar el sckt
+	global sckt
+
+	mensaje = '#exit*'
+	sckt.send(mensaje.encode('UTF-8'))
+	time.sleep(1)
+	sckt.shutdown(socket.SHUT_RDWR)
+	sckt.close()
+	print("Me cerré") 
+	ventana.hide()
+	ventana.deleteLater()
+	sys.exit()
+	
